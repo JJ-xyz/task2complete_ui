@@ -11,13 +11,25 @@
         url: "/",
         templateUrl: "partials/login.html",
       })
-      .state('tasks', {
+      .state('indexAll', {
+        url: "/tasks",
+        templateUrl: "partials/tasks.html",
+      })
+      .state('indexTo', {
+        url: "/tasks",
+        templateUrl: "partials/tasks.html",
+      })
+      .state('indexBy', {
         url: "/tasks",
         templateUrl: "partials/tasks.html",
       })
       .state('logout', {
         url: "/",
         templateUrl: "partials/login.html",
+      })
+      .state('user', {
+        url: "/user",
+        templateUrl: "partials/user.html",
       })
       .state('signup', {
         url: "/signup",

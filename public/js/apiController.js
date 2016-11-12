@@ -40,8 +40,8 @@
           self.currentUser = userPass.username;
           localStorage.setItem('activeUsername', userPass.username);
           localStorage.setItem('activeToken', response.data.token);
-          
-          $state.go('tasks', {url: '/', token: response.data.token});  // temp - token
+
+          $state.go('indexAll', {url: '/', token: response.data.token});  // temp - token
         } else {
           console.log("RESPONSE", response);
           self.currentUser = '';
