@@ -1,0 +1,15 @@
+<div class="x-entry">
+  <form ng-submit="api.login(userPass)">
+    <div>
+      <label for="username">username</label>
+      <input type="text" ng-model="userPass.username" required>
+    </div>
+    <div>
+      <label for="password">password</label>
+      <input type="password" ng-model="userPass.password" required>
+    </div>
+    <button class="x-btn" type="submit">login</button><span>{{api.enote}}</span>
+  </form>
+  <br>
+  <a ui-sref-active="active" ui-sref="signup">Not registered yet, sign up here!</a>
+</div>

@@ -9,5 +9,5 @@ app.get('/', function(req, res){
 });
 
 app.listen(4000, function(){
-    console.log("=== task2complete :: listening on port 4000");
+    console.log("=== task2complete :: listening on port [4000] ===");
 });
