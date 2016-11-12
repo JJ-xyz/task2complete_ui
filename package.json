@@ -1,0 +1,23 @@
+{
+  "name": "task2complete_ui",
+  "version": "1.0.0",
+  "description": "Task to Complete Web app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JJ-xyz/task2complete_ui.git"
+  },
+  "author": "JJ-xyz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JJ-xyz/task2complete_ui/issues"
+  },
+  "homepage": "https://github.com/JJ-xyz/task2complete_ui#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "morgan": "^1.7.0"
+  }
+}
