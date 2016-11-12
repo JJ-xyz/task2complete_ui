@@ -12,6 +12,7 @@
     self.login = login;
     self.logout = logout;
     self.myProfile = myProfile;
+    self.myUpdate = myUpdate;
     self.enote = '';
 
 
@@ -87,7 +88,7 @@
         self.account = {
           email: response.data.user.email,
           e_confirmed: response.data.user.e_confirmed,
-          ignorePasswordChange: false
+          wantPasswordChange: false
         }
       })
       .catch((err) => {
@@ -117,6 +118,31 @@
         console.log(err);
       });
      }
+
+     // --- update process, update user profile
+    function myUpdate(account) {
+      console.log("accountFromAngular>>>", account);      // test - 2B deleted
+      if (self.account.wantPasswordChange) {
+        self.enote = 'Sorry, no password change allowed'
+        $state.go('user')
+        // may complete on second pass - now: no password change allowed
+      } else {
+        $http({
+          method: 'PUT',
+          url: `${rootUrl}/api/users/${localStorage.activeUserId}`,
+          data: {email: self.account.email, e_confirmed: self.account.e_confirmed},   // temp until second pass
+          headers: {Authorization: `Bearer ${localStorage.activeToken}`},
+          responseType: 'json'
+          })
+        .then(function(response) {
+          console.log("RESPONSE", response);     // test - 2B deleted
+          $state.go('indexAll')
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
+    }
 
 	}
 
