@@ -14,13 +14,13 @@
 		<header>
 			<h1>TASKS TO COMPLETE</h1>
       <p>{{2 + 2}}
-			<h4>Welcome {{api.currentUser}} | <a ng-click="api.logout()">logout</a></h4>
+			<h4>Welcome {{api.currentUser}} | <a ng-click="api.myProfile()">Profile</a> | <a ng-click="api.logout()">logout</a></h4>
 		</header>
 		<nav>
-			<a ui-sref-active="active" ui-sref="home">Home</a>
-			<a ui-sref-active="active" ui-sref="indexAll">All Tasks</a>
-      <a ui-sref-active="active" ui-sref="indexTo">Pending Tasks</a>
-      <a ui-sref-active="active" ui-sref="indexBy">Delegated Tasks</a>
+			<a ui-sref-active="active" ui-sref="home">[Home]</a>
+			<a ui-sref-active="active" ui-sref="indexAll">[All Tasks]</a>
+      <a ui-sref-active="active" ui-sref="indexTo">[Pending Tasks]</a>
+      <a ui-sref-active="active" ui-sref="indexBy">[Delegated Tasks]</a>
 		</nav>
 		<main ui-view></main>
 	</body>

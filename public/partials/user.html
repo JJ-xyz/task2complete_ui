@@ -1,20 +1,32 @@
 <div class="x-entry">
-  <form ng-submit="api.signup(account)">
+  <h3>{{api.cuurentUser}} profile update</h3>
+
+  <form ng-submit="api.temp(account)">
     <div>
-      <label for="username">username</label>
-      <input type="text" ng-model="account.username" required>
+      <label for="changePassword">change pasword?</label>
+      <input type="checkbox" ng-model="api.account.ignorePasswordChange">
     </div>
-    <div>
-      <label for="password">password</label>
-      <input type="password" ng-model="account.password" required>
+
+    <div ng-show="api.account.ignorePasswordChange">
+      <label for="oldPassword">old password</label>
+      <input type="password" ng-model="api.account.oldPassword">
     </div>
+    <div ng-show="api.account.ignorePasswordChange">
+      <label for="newPassword1">new password</label>
+      <input type="password" ng-model="api.account.newPassword1">
+    </div>
+    <div ng-show="api.account.ignorePasswordChange">
+      <label for="newPassword2">retype password</label>
+      <input type="password" ng-model="api.account.newPassword2">
+    </div>
+    </br>
     <div>
       <label for="email">email</label>
-      <input type="text" ng-model="account.email" required>
+      <input type="text" ng-model="api.account.email" required>
     </div>
     <div>
       <label for="e_confirmed">Confirmed</label>
-      <input type="checkbox" ng-model="account.e_confirmed" required>
+      <input type="checkbox" ng-model="api.account.e_confirmed" required>
     </div>
     <button class="x-btn x-btn-add" type="submit">signup</button>
   </form>
