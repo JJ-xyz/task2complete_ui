@@ -13,15 +13,66 @@
     self.logout = logout;
     self.myProfile = myProfile;
     self.myUpdate = myUpdate;
+    self.getAllTasks = getAllTasks;
+    self.getOneTask = getOneTask;
+    self.deleteOneTask = deleteOneTask;
     self.enote = '';
 
+    getAllTasks();
 
     // *-------------------------------------------------------------*
     // * Application Section --- No separation of concenrs yet       *
     // *-------------------------------------------------------------*
 
+    // --- getAllTasks ---
+    function getAllTasks(){
+      $http({
+        method: 'GET',
+        url: `${rootUrl}/api/tasks`,
+        data: {},
+        headers: {Authorization: `Bearer ${localStorage.activeToken}`},
+        responseType: 'json'
+      })
+      .then(function(response){
+        self.taskList = response.data;
+        console.log("RESPONSE", response.data);
+      })
+      .catch((err) => { console.log(err) });
+    }
 
+    // --- getOneTask ---
+    function getOneTask(i){
+      console.log(`getOneTask function call line ${i}`);
+      // $http({
+      //   method: 'GET',
+      //   url: `${rootUrl}/api/tasks`,
+      //   data: {},
+      //   headers: {Authorization: `Bearer ${localStorage.activeToken}`},
+      //   responseType: 'json'
+      // })
+      // .then(function(response){
+      //   self.taskList = response.data;
+      //   console.log("RESPONSE", response.data);
+      // })
+      // .catch((err) => { console.log(err) });
+    }
 
+    // --- deleteOneTask ---
+    function deleteOneTask(i){
+      console.log(`deleteOneTask function call line ${i}`);
+      // $http({
+      //   method: 'GET',
+      //   url: `${rootUrl}/api/tasks`,
+      //   data: {},
+      //   headers: {Authorization: `Bearer ${localStorage.activeToken}`},
+      //   responseType: 'json'
+      // })
+      // .then(function(response){
+      //   self.taskList = response.data;
+      //   console.log("RESPONSE", response.data);
+      // })
+      // .catch((err) => { console.log(err) });
+    }
 
 
     // *-------------------------------------------------------------*
@@ -30,6 +81,7 @@
 
     // --- Login process, set local storage
     function login(userPass) {
+      self.enote = '';
       console.log("userFromAngular>>>", userPass);        // test - 2B deleted
       $http({
         method: 'POST',
@@ -122,9 +174,10 @@
      // --- update process, update user profile
     function myUpdate(account) {
       console.log("accountFromAngular>>>", account);      // test - 2B deleted
+      self.enote = '';
       if (self.account.wantPasswordChange) {
-        self.enote = 'Sorry, no password change allowed'
-        $state.go('user')
+        self.enote = 'Sorry, no password change allowed';
+        $state.go('user');
         // may complete on second pass - now: no password change allowed
       } else {
         $http({

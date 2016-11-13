@@ -1,5 +1,16 @@
-<section class="x-entry">
+<div class="x-entry">
 
-<h1>...here will display the task lists</h1>
+<h4>...here will display the task lists</h4>
 
-</section>
+<ul>
+  <span> TASK  |  DESCRIPTION  | DUE DATE | COMPLETED ON | </span>
+  <li ng-repeat="task in api.taskList">
+    <button class="x-btn x-btn-add" ng-click="api.deleteOneTask($index)">remove</button>
+    <span ng-click="api.getOneTask($index)">{{ task.name }} | {{ task.description }} | {{task.date_due}} | {{task.date_completed}}</span>
+  </li>
+</ul>
+
+
+
+
+</div>
