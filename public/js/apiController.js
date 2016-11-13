@@ -16,6 +16,8 @@
     self.getAllTasks = getAllTasks;
     self.getOneTask = getOneTask;
     self.deleteOneTask = deleteOneTask;
+    self.createTask = createTask;
+    self.newTask = newTask;
     self.enote = '';
 
     getAllTasks();
@@ -39,6 +41,56 @@
       })
       .catch((err) => { console.log(err) });
     }
+
+    // --- newTask ---
+    function newTask(i){
+      console.log(`getOneTask function call for next line`);      // test - 2B deleted
+      $http({
+        method: 'GET',
+        url: `${rootUrl}/api/users`,
+        data: {},
+        headers: {Authorization: `Bearer ${localStorage.activeToken}`},
+        responseType: 'json'
+      })
+      .then(function(response){
+        console.log("RESPONSE", response.data);         // test - 2B deleted
+        self.allUsers = response.data;
+        self.detail = '';
+
+        $state.go('newTask');
+      })
+      .catch((err) => { console.log(err) });
+    }
+
+    // --- createTask ---
+    function createTask(detail){
+      console.log(`createTask function call from newTask`);      // test - 2B deleted
+      console.log("PASSED detail", detail);                      // test - 2B deleted
+      $http({
+        method: 'POST',
+        url: `${rootUrl}/api/tasks`,
+        data: {
+          name: detail.name,
+          description: detail.description,
+          assigned_by: localStorage.activeUserId,
+          assigned_to: detail.theUser.id,
+          date_assigned: new Date(),
+          date_due: detail.date_due
+        },
+        headers: {Authorization: `Bearer ${localStorage.activeToken}`},
+        responseType: 'json'
+      })
+      .then(function(response){
+        console.log("RESPONSE", response.data);                 // test - 2B deleted
+        self.taskOne = response.data;
+        self.taskList.push(response.data);
+        self.detail = '';
+
+        $state.go('indexAll');
+      })
+      .catch((err) => { console.log(err) });
+    }
+
 
     // --- getOneTask ---
     function getOneTask(i){
@@ -73,6 +125,8 @@
       // })
       // .catch((err) => { console.log(err) });
     }
+
+
 
 
     // *-------------------------------------------------------------*

@@ -34,6 +34,10 @@
       .state('signup', {
         url: "/signup",
         templateUrl: "partials/signup.html",
+      })
+      .state('newTask', {
+        url: "/newtask",
+        templateUrl: "partials/newtask.html",
       });
 
     $urlRouterProvider.otherwise('/');

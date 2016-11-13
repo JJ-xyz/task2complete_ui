@@ -1,7 +1,7 @@
 <div class="x-entry">
-  <h3>{{api.cuurentUser}} profile update</h3>
+  <h4>{{api.curentUser}} profile update</h4>
 
-  <form ng-submit="api.myUpdate(account)">
+  <form ng-submit="api.myUpdate(api.account)">
     <div>
       <label for="changePassword">change pasword?</label>
       <input type="checkbox" ng-model="api.account.wantPasswordChange">
@@ -22,7 +22,7 @@
     </br>
     <div>
       <label for="email">email</label>
-      <input type="text" ng-model="api.account.email" required>
+      <input type="email" ng-model="api.account.email" required>
     </div>
     <div>
       <label for="e_confirmed">Confirmed</label>
