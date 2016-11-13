@@ -35,9 +35,13 @@
         url: "/signup",
         templateUrl: "partials/signup.html",
       })
-      .state('newTask', {
-        url: "/newtask",
-        templateUrl: "partials/newtask.html",
+      .state('taskNew', {
+        url: "/tasknew",
+        templateUrl: "partials/tasknew.html",
+      })
+      .state('taskEdit', {
+        url: "/taskedit",
+        templateUrl: "partials/taskedit.html",
       });
 
     $urlRouterProvider.otherwise('/');

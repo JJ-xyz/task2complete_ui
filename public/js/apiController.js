@@ -18,6 +18,7 @@
     self.deleteOneTask = deleteOneTask;
     self.createTask = createTask;
     self.newTask = newTask;
+    self.partialTitle = ''
     self.enote = '';
 
     getAllTasks();
@@ -55,9 +56,10 @@
       .then(function(response){
         console.log("RESPONSE", response.data);         // test - 2B deleted
         self.allUsers = response.data;
+        self.partialTitle = "Add New Task";
         self.detail = '';
 
-        $state.go('newTask');
+        $state.go('taskNew');
       })
       .catch((err) => { console.log(err) });
     }
@@ -95,18 +97,23 @@
     // --- getOneTask ---
     function getOneTask(i){
       console.log(`getOneTask function call line ${i}`);
-      // $http({
-      //   method: 'GET',
-      //   url: `${rootUrl}/api/tasks`,
-      //   data: {},
-      //   headers: {Authorization: `Bearer ${localStorage.activeToken}`},
-      //   responseType: 'json'
-      // })
-      // .then(function(response){
-      //   self.taskList = response.data;
-      //   console.log("RESPONSE", response.data);
-      // })
-      // .catch((err) => { console.log(err) });
+      $http({
+        method: 'GET',
+        url: `${rootUrl}/api/tasks/${self.taskList[i].id}`,
+        data: {},
+        headers: {Authorization: `Bearer ${localStorage.activeToken}`},
+        responseType: 'json'
+      })
+      .then(function(response){
+        self.taskOne = response.data;
+        console.log("RESPONSE", response.data);
+        self.detail = response.data;
+        self.detail.theUser = {id : 6, username: "user10"}
+        self.partialTitle = "Task Details";
+
+        $state.go('taskEdit');
+      })
+      .catch((err) => { console.log(err) });
     }
 
     // --- deleteOneTask ---
