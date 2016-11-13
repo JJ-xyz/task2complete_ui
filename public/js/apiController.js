@@ -14,6 +14,9 @@
     self.myProfile = myProfile;
     self.myUpdate = myUpdate;
     self.getAllTasks = getAllTasks;
+    // *** for second pass review ***
+    // self.myPendingTasks = myPendingTasks;
+    // self.myDelegatedTasks = myDelegatedTasks;
     self.getOneTask = getOneTask;
     self.deleteOneTask = deleteOneTask;
     self.createTask = createTask;
@@ -23,6 +26,9 @@
     self.enote = '';
 
     getAllTasks();
+    // *** for second pass review ***
+    // myPendingTasks();
+    // myDelegatedTasks();
 
     // *-------------------------------------------------------------*
     // * Application Section --- No separation of concenrs yet       *
@@ -39,9 +45,21 @@
       })
       .then(function(response){
         self.taskList = response.data;
-        console.log("RESPONSE", response.data);
+        console.log("RESPONSE-getAllTasks", response.data);
       })
       .catch((err) => { console.log(err) });
+    }
+
+    // --- myPendingTasks ---
+    function myPendingTasks(){
+      self.pendingTasks = self.taskList.filter(function(x){ return x.assigned_to == localStorage.activeUserIdid; })
+      return self.pendingTasks;
+    }
+
+    // --- myDelegatedTasks ---
+    function myDelegatedTasks(){
+      self.delegatedTasks = self.taskList.filter(function(x){ return x.assigned_by == localStorage.activeUserIdid; })
+      return self.pendingTasks;
     }
 
     // --- newTask ---
@@ -55,7 +73,7 @@
         responseType: 'json'
       })
       .then(function(response){
-        console.log("RESPONSE", response.data);         // test - 2B deleted
+        console.log("RESPONSE-getOneTask", response.data);         // test - 2B deleted
         self.allUsers = response.data;
         self.partialTitle = "Add New Task";
         self.detail = '';
@@ -85,7 +103,7 @@
         responseType: 'json'
       })
       .then(function(response){
-        console.log("RESPONSE", response.data);                 // test - 2B deleted
+        console.log("RESPONSE-createTask", response.data);                 // test - 2B deleted
         self.taskOne = response.data;
         self.taskList.push(response.data);
         self.detail = '';
@@ -108,7 +126,7 @@
       })
       .then(function(response){
         self.taskOne = response.data;
-        console.log("RESPONSE", response.data);
+        console.log("RESPONSE-getOneTask", response.data);
         self.detail = response.data;
         self.detail.theUser = {id : response.data.id, username: response.data.username}
         self.partialTitle = "Task Details";
@@ -136,7 +154,7 @@
         responseType: 'json'
       })
       .then(function(response){
-        console.log("RESPONSE", response.data);                 // test - 2B deleted
+        console.log("RESPONSE-updateTask", response.data);                 // test - 2B deleted
         self.taskOne = response.data;
         var x = self.taskList.findIndex(function(e) {return e.id === response.data.id});
         self.taskList[x] = response.data;
@@ -150,18 +168,21 @@
     // --- deleteOneTask ---
     function deleteOneTask(i){
       console.log(`deleteOneTask function call line ${i}`);
-      // $http({
-      //   method: 'GET',
-      //   url: `${rootUrl}/api/tasks`,
-      //   data: {},
-      //   headers: {Authorization: `Bearer ${localStorage.activeToken}`},
-      //   responseType: 'json'
-      // })
-      // .then(function(response){
-      //   self.taskList = response.data;
-      //   console.log("RESPONSE", response.data);
-      // })
-      // .catch((err) => { console.log(err) });
+      $http({
+        method: 'DELETE',
+        url: `${rootUrl}/api/tasks/${self.taskList[i].id}`,
+        data: {},
+        headers: {Authorization: `Bearer ${localStorage.activeToken}`},
+        responseType: 'json'
+      })
+      .then(function(response){
+        console.log("RESPONSE-deleteOneTask", response.data);         // test - 2B deleted
+        self.taskList.splice(i,1);
+
+        $state.go('indexAll');
+      })
+      .catch((err) => { console.log(err) });
+
     }
 
 
