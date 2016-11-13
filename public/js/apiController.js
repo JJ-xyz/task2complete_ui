@@ -18,6 +18,7 @@
     self.deleteOneTask = deleteOneTask;
     self.createTask = createTask;
     self.newTask = newTask;
+    self.updateTask = updateTask;
     self.partialTitle = ''
     self.enote = '';
 
@@ -77,7 +78,8 @@
           assigned_by: localStorage.activeUserId,
           assigned_to: detail.theUser.id,
           date_assigned: new Date(),
-          date_due: detail.date_due
+          date_due: detail.date_due,
+          is_complete: false
         },
         headers: {Authorization: `Bearer ${localStorage.activeToken}`},
         responseType: 'json'
@@ -96,7 +98,7 @@
 
     // --- getOneTask ---
     function getOneTask(i){
-      console.log(`getOneTask function call line ${i}`);
+      console.log(`getOneTask function call for line ${i}`);
       $http({
         method: 'GET',
         url: `${rootUrl}/api/tasks/${self.taskList[i].id}`,
@@ -108,10 +110,39 @@
         self.taskOne = response.data;
         console.log("RESPONSE", response.data);
         self.detail = response.data;
-        self.detail.theUser = {id : 6, username: "user10"}
+        self.detail.theUser = {id : response.data.id, username: response.data.username}
         self.partialTitle = "Task Details";
 
         $state.go('taskEdit');
+      })
+      .catch((err) => { console.log(err) });
+    }
+
+    // --- createTask ---
+    function updateTask(detail){
+      console.log(`updateTask function call from getOneTask`);      // test - 2B deleted
+      console.log("PASSED detail", detail);                      // test - 2B deleted
+      $http({
+        method: 'PUT',
+        url: `${rootUrl}/api/tasks/${self.detail.id}`,
+        data: {
+          name: detail.name,
+          description: detail.description,
+          //assigned_to: detail.theUser.id,    // to be decided later
+          //date_due: detail.date_due,         // to be decided later
+          is_complete: detail.is_complete
+        },
+        headers: {Authorization: `Bearer ${localStorage.activeToken}`},
+        responseType: 'json'
+      })
+      .then(function(response){
+        console.log("RESPONSE", response.data);                 // test - 2B deleted
+        self.taskOne = response.data;
+        var x = self.taskList.findIndex(function(e) {return e.id === response.data.id});
+        self.taskList[x] = response.data;
+        self.detail = '';
+
+        $state.go('indexAll');
       })
       .catch((err) => { console.log(err) });
     }

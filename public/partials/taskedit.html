@@ -1,7 +1,7 @@
 <div class="x-entry">
   <h4>Edit Task Details</h4>
 
-  <form ng-submit="api.createTask(api.detail)">
+  <form ng-submit="api.updateTask(api.detail)">
 
     <div>
       <label for="name">task</label>
@@ -12,6 +12,7 @@
       <input type="textarea" ng-model="api.detail.description" required>
     </div>
     <!-- <div>
+    *** some convertion issues to be resolved in sencond pass ***
       <label for="date_due">date due</label>
       <input type="date" ng-model="api.detail.date_due" required>
     </div>
@@ -21,6 +22,10 @@
         ng-options="option.username for option in api.allUsers track by option.id"
         ng-model="api.detail.theUser" required></select>
     </div> -->
+    <div>
+      <label for="is_complete">Completed?</label>
+      <input type="checkbox" ng-model="api.detail.is_complete">
+    </div>
     <button class="x-btn x-btn-add" type="submit">update</button><span>{{api.enote}}</span>
   </form>
 </div>

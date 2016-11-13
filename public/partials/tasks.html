@@ -2,10 +2,10 @@
   <h4>All Task List</h4>
 
   <ul>
-    <span> TASK  |  DESCRIPTION  | DUE DATE | COMPLETED ON | </span>
+    <span> ID | Complete? | TASK  |  DESCRIPTION  | DUE DATE | COMPLETED ON | </span>
     <li ng-repeat="task in api.taskList">
       <button class="x-btn x-btn-add" ng-click="api.deleteOneTask($index)">remove</button>
-      <tt ng-click="api.getOneTask($index)">{{ task.name }} | {{ task.description }} | {{task.date_due}} | {{task.date_completed}}</tt>
+      <tt ng-click="api.getOneTask($index)"> {{task.id}} | {{task.is_complete}} | {{ task.name }} | {{ task.description }} | {{task.date_due}} | {{task.date_completed}}</tt>
     </li>
     <button class="x-btn x-btn-add" ng-click="api.newTask()">new task</button>
   </ul>
