@@ -196,7 +196,7 @@
     // --- Login process, set local storage
     function login(userPass) {
       self.enote = '';
-      console.log("userFromAngular>>>", userPass);        // test - 2B deleted
+      console.log("login userFromAngular>>>", userPass);        // test - 2B deleted
       $http({
         method: 'POST',
         url: `${rootUrl}/api/users/login`,
@@ -277,7 +277,7 @@
         responseType: 'json'
       })
       .then(function(response) {
-        console.log("The user is>>>",account.username);     // test - 2B deleted
+        console.log("RESPONSE signup>>>",account.username);     // test - 2B deleted
         $state.go('home')
       })
       .catch((err) => {
