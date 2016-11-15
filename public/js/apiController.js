@@ -200,7 +200,7 @@
       $http({
         method: 'POST',
         url: `${rootUrl}/api/users/login`,
-        data: {username: userPass.username, password: userPass.password},
+        data: {user: {username: userPass.username, password: userPass.password}},
         responseType: 'json'
       })
       .then(function(response) {
