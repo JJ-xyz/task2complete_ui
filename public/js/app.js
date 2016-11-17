@@ -7,13 +7,13 @@
 
   function MainRouter($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
-      .state('home', {
-        url: "/",
-        templateUrl: "partials/login.html",
-      })
       .state('indexAll', {
         url: "/tasks",
         templateUrl: "partials/tasks.html",
+      })
+      .state('home', {
+        url: "/login",
+        templateUrl: "partials/login.html",
       })
       .state('indexTo', {
         url: "/tasks",
@@ -24,7 +24,7 @@
         templateUrl: "partials/tasks.html",
       })
       .state('logout', {
-        url: "/",
+        url: "/login",
         templateUrl: "partials/login.html",
       })
       .state('user', {

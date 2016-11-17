@@ -6,8 +6,8 @@
 	function ApiController($http, $state){
 
 		var self = this;
-    var rootUrl = "https://task2complete-api.herokuapp.com";  // API heroku url
-    //var rootUrl = "http://localhost:3000";  // API local url
+    //var rootUrl = "https://task2complete-api.herokuapp.com";  // API heroku url
+    var rootUrl = "http://localhost:3000";  // API local url
 
     self.signup = signup;
     self.login = login;
@@ -25,8 +25,22 @@
     self.updateTask = updateTask;
     self.partialTitle = ''
     self.enote = '';
+    self.currentUser = localStorage.activeUsername;
 
-    getAllTasks();
+
+
+    if (self.currentUser) {
+      getAllTasks();
+      $state.go('indexAll', {url: "/", templateUrl: "partials/tasks.html"} );
+    } else {
+      logout();
+      // $state.go('home', { url: "/login", templateUrl: "partials/login.html"} );
+    };
+
+
+
+
+
     // *** for second pass review ***
     // myPendingTasks();
     // myDelegatedTasks();
@@ -211,6 +225,7 @@
           localStorage.setItem('activeUserId', response.data.user.id);
           console.log("RESPONSE", response);                          // test - 2B deleted
 
+          getAllTasks();
           $state.go('indexAll');
 
         } else {
