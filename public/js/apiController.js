@@ -6,8 +6,8 @@
 	function ApiController($http, $state){
 
 		var self = this;
-    //var rootUrl = "https://task2complete-api.herokuapp.com";  // API heroku url
-    var rootUrl = "http://localhost:3000";  // API local url
+    var rootUrl = "https://task2complete-api.herokuapp.com";  // API heroku url
+    //var rootUrl = "http://localhost:3000";  // API local url
 
     self.signup = signup;
     self.login = login;
