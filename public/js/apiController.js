@@ -102,6 +102,8 @@
     function createTask(detail){
       console.log(`createTask function call from newTask`);      // test - 2B deleted
       console.log("PASSED detail", detail);                      // test - 2B deleted
+      var fdate = new Date();
+
       $http({
         method: 'POST',
         url: `${rootUrl}/api/tasks`,
@@ -140,8 +142,13 @@
         responseType: 'json'
       })
       .then(function(response){
+        response.data.date_due = new Date(response.data.date_due);
         self.taskOne = response.data;
         console.log("RESPONSE-getOneTask", response.data);
+        console.log("XXXXXXXXX DATE detail", response.data.date_due);                      // test - 2B deleted
+        var fdate = new Date();
+        console.log("XXXXXXXXX DATE today", fdate);                      // test - 2B deleted
+
         self.detail = response.data;
         self.detail.theUser = {id : response.data.id, username: response.data.username}
         self.partialTitle = "Task Details";
@@ -151,7 +158,7 @@
       .catch((err) => { console.log(err) });
     }
 
-    // --- createTask ---
+    // --- updateTask ---
     function updateTask(detail){
       console.log(`updateTask function call from getOneTask`);      // test - 2B deleted
       console.log("PASSED detail", detail);                      // test - 2B deleted
@@ -162,7 +169,7 @@
           name: detail.name,
           description: detail.description,
           //assigned_to: detail.theUser.id,    // to be decided later
-          //date_due: detail.date_due,         // to be decided later
+          date_due: detail.date_due,
           is_complete: detail.is_complete
         },
         headers: {Authorization: `Bearer ${localStorage.activeToken}`},
