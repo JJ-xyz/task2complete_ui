@@ -1,4 +1,4 @@
-<div class="x-entry">
+<div class="container">
   <h4>User Login</h4>
 
   <form ng-submit="api.login(userPass)">
@@ -10,7 +10,7 @@
       <label for="password">password</label>
       <input type="password" ng-model="userPass.password" required>
     </div>
-    <button class="x-btn" type="submit">login</button><span>{{api.enote}}</span>
+    <button class="waves-effect waves-light purple lighten-2 btn" type="submit">login</button><span>{{api.enote}}</span>
   </form>
   <br>
   <a ui-sref-active="active" ui-sref="signup">Not registered yet, sign up here!</a>

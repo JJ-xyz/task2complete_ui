@@ -3,22 +3,29 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Tasks to Complete</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
 		<script src="js/app.js"></script>
 		<script src="js/apiController.js"></script>
 		<link rel="stylesheet" href="css/style.css">
+		<link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	</head>
 
 	<body ng-controller="ApiController as api">
-		<header>
-			<h1>TASKS TO COMPLETE</h1>
-      <p>{{2 + 2}}
-			<h3 ng-show="api.currentUser">Welcome, {{api.currentUser}} | <a ng-click="api.myProfile()">Profile</a> | <a ng-click="api.logout()">logout</a></h3>
-			<h3 ng-hide="api.currentUser">Welcome, please sign in</h3>
+		<header >
+			<h1 class="valign-wrapper"> TASKS TO COMPLETE</h1><br>
+			<div class="">
+				<h5 class="right-align" ng-show="api.currentUser">Welcome, {{api.currentUser}} | <a ng-click="api.myProfile()">Profile</a> | <a ng-click="api.logout()">logout</a></h5>
+				<h5 class="right-align" ng-hide="api.currentUser">Welcome, <a ng-click="api.logout()">please sign in </a></h5>
+			</div>
 		</header>
-		<nav>
-			<a ui-sref-active="active" ui-sref="indexAll">[Home]</a>
+		<nav class="card-panel purple lighten-2 valign-wrapper">
+			<a ui-sref-active="active" ui-sref="indexAll"><h5>Home</h5></a>
 			<!-- <a ui-sref-active="active" ui-sref="home">[Home]</a>
 			*** fro secon pass review ***
       <a ui-sref-active="active" ui-sref="indexTo">[My Pending Tasks]</a>

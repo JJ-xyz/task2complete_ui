@@ -1,13 +1,44 @@
-<div class="x-entry">
-  <h4>All Task List</h4>
+<div class="container">
+  <h3 class="right-align purple-text text-lighten-2">All Task List</h3>
 
   <ul>
-    <span> _______ ID | Complete? | TASK  | ASSIGNED TO | DESCRIPTION  | ASSIGNED BY | DUE DATE | COMPLETED ON | </span>
-    <li ng-repeat="task in api.taskList | filter:task.is_complete:strict" >
-      <button class="x-btn x-btn-add" ng-click="api.deleteOneTask($index)">remove</button>
-      <tt ng-click="api.getOneTask($index)"> {{task.id}} | {{task.is_complete}} | {{ task.name }} | {{task.assigned_to}} | {{ task.description }} | {{assigned_by}} | {{task.date_due}} | {{task.date_completed}}</tt>
-    </li>
-    <button class="x-btn x-btn-add" ng-click="api.newTask()">new task</button>
-  </ul>
+    <!-- <span> _______ ID | Complete? | TASK  | ASSIGNED TO | DESCRIPTION  | ASSIGNED BY | DUE DATE | COMPLETED ON | </span> -->
+    <li class="card-panel hoverable" ng-repeat="task in api.taskList | filter:task.is_complete:strict" >
+      <div ng-click="api.getOneTask($index)">
+        <h4>{{task.name}}</h4>
+        <button class="btn-fix btn waves-effect waves-light red lighten-2 right" ng-click="api.deleteOneTask($index)">delete task</button>
+        <div class="divider"></div>
+        <blockquote class="">{{task.description}}.</blockquote>
+      </div>
 
+      <!-- <button class="btn-floating btn-small waves-effect waves-light red lighten-2" ng-click="api.deleteOneTask($index)">X</button>
+      <tt ng-click="api.getOneTask($index)"> {{task.id}} | {{task.is_complete}} | {{ task.name }} | {{task.assigned_to}} | {{ task.description }} | {{assigned_by}} | {{task.date_due}} | {{task.date_completed}}</tt> -->
+
+      <table class="highlight">
+        <thead>
+          <tr>
+              <th data-field="option">Done?</th>
+              <th data-field="name">Assigned To</th>
+              <th data-field="skills">Assigned Since</th>
+              <th data-field="email">Assigned By</th>
+              <th data-field="location">Due Datee</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <!-- <td>{{task.is_complete}}</td> -->
+            <td ng-hide="{{task.is_complete}}"><i class="material-icons"></i></td>
+            <td ng-show="{{task.is_complete}}"><i class="material-icons">done</i></td>
+            <td>{{task.assigned_to_name}}</td>
+            <td>{{task.date_due}}</td>
+            <td>{{task.assigned_by_name}}</td>
+            <td>{{task.date_assigned}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </li>
+    <button class="waves-effect waves-light purple lighten-2 btn" ng-click="api.newTask()">new task</button>
+  </ul>
 </div>

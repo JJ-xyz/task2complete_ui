@@ -8,7 +8,7 @@
   function MainRouter($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
       .state('indexAll', {
-        url: "/tasks",
+        url: "/",
         templateUrl: "partials/tasks.html",
       })
       .state('home', {

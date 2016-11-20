@@ -6,8 +6,8 @@
 	function ApiController($http, $state){
 
 		var self = this;
-    var rootUrl = "https://task2complete-api.herokuapp.com";  // API heroku url
-    //var rootUrl = "http://localhost:3000";  // API local url
+    // var rootUrl = "https://task2complete-api.herokuapp.com";  // API heroku url
+    var rootUrl = "http://localhost:3000";  // API local url
 
     self.signup = signup;
     self.login = login;
@@ -30,11 +30,12 @@
 
 
     if (self.currentUser) {
+      getUserList();
       getAllTasks();
       $state.go('indexAll', {url: "/", templateUrl: "partials/tasks.html"} );
     } else {
       logout();
-      // $state.go('home', { url: "/login", templateUrl: "partials/login.html"} );
+      $state.go('home', { url: "/login", templateUrl: "partials/login.html"} );
     };
 
 
@@ -62,6 +63,28 @@
         self.taskList = response.data;
         console.log("RESPONSE-getAllTasks", response.data);
       })
+      .then(function() {
+        getUserList();
+      })
+      .then(function(userpack) {
+        for (i=0; i<self.taskList.length; i++) {
+
+          var personId = self.taskList[i].assigned_to;
+          console.log("++++personId+++1+", personId);
+          var y = self.allUsers.findIndex(function(e) {return personId === e.id});
+          console.log("-------y-------1-", y);
+          self.taskList[i].assigned_to_name = self.allUsers[y].username;
+          console.log("======name=====1=", self.taskList[i].assigned_to_name );
+
+          var personId = self.taskList[i].assigned_by;
+          console.log("++++personId+++2+", personId);
+          var y = self.allUsers.findIndex(function(e) {return personId === e.id});
+          console.log("-------y-------2-", y);
+          self.taskList[i].assigned_by_name = self.allUsers[y].username;
+          console.log("======name=====2=", self.taskList[i].assigned_by_name );
+
+        }
+      })
       .catch((err) => { console.log(err) });
     }
 
@@ -77,9 +100,8 @@
       return self.pendingTasks;
     }
 
-    // --- newTask ---
-    function newTask(i){
-      console.log(`getOneTask function call for next line`);      // test - 2B deleted
+    // --- getUserList ---
+    function getUserList(){
       $http({
         method: 'GET',
         url: `${rootUrl}/api/users`,
@@ -88,14 +110,20 @@
         responseType: 'json'
       })
       .then(function(response){
-        console.log("RESPONSE-getOneTask", response.data);         // test - 2B deleted
         self.allUsers = response.data;
-        self.partialTitle = "Add New Task";
-        self.detail = '';
-
-        $state.go('taskNew');
+        console.log("XXXXXXXXX the user list is ", self.allUsers);
       })
       .catch((err) => { console.log(err) });
+    }
+
+    // --- newTask ---
+    function newTask(i){
+      console.log(`getOneTask function call for next line`);      // test - 2B deleted
+      getUserList();
+      self.partialTitle = "Add New Task";
+      self.detail = '';
+        // self.detail.theUser = '';
+      $state.go('taskNew');
     }
 
     // --- createTask ---
@@ -122,8 +150,26 @@
       .then(function(response){
         console.log("RESPONSE-createTask", response.data);                 // test - 2B deleted
         self.taskOne = response.data;
+
+        var personId = self.taskOne.assigned_to;
+        console.log("++u++personId+++1+", personId);
+        var y = self.allUsers.findIndex(function(e) {return personId === e.id});
+        console.log("--u-----y-------1-", y);
+        self.taskOne.assigned_to_name = self.allUsers[y].username;
+        console.log("==u====name=====1=", self.taskOne.assigned_to_name );
+
+        var personId = self.taskOne.assigned_by;
+        console.log("++u++personId+++2+", personId);
+        var y = self.allUsers.findIndex(function(e) {return personId === e.id});
+        console.log("--u-----y-------2-", y);
+        self.taskOne.assigned_by_name = self.allUsers[y].username;
+        console.log("==u====name=====2=", self.taskOne.assigned_by_name );
+
+
+
         self.taskList.push(response.data);
         self.detail = '';
+
 
         $state.go('indexAll');
       })
@@ -150,7 +196,7 @@
         console.log("XXXXXXXXX DATE today", fdate);                      // test - 2B deleted
 
         self.detail = response.data;
-        self.detail.theUser = {id : response.data.id, username: response.data.username}
+        self.detail.theUser = {id : response.data.assigned_to, username: response.data.username}
         self.partialTitle = "Task Details";
 
         $state.go('taskEdit');
@@ -168,7 +214,7 @@
         data: {
           name: detail.name,
           description: detail.description,
-          //assigned_to: detail.theUser.id,    // to be decided later
+          assigned_to: detail.theUser.id,
           date_due: detail.date_due,
           is_complete: detail.is_complete
         },
@@ -178,6 +224,22 @@
       .then(function(response){
         console.log("RESPONSE-updateTask", response.data);                 // test - 2B deleted
         self.taskOne = response.data;
+
+        var personId = self.taskOne.assigned_to;
+        console.log("++u++personId+++1+", personId);
+        var y = self.allUsers.findIndex(function(e) {return personId === e.id});
+        console.log("--u-----y-------1-", y);
+        self.taskOne.assigned_to_name = self.allUsers[y].username;
+        console.log("==u====name=====1=", self.taskOne.assigned_to_name );
+
+        var personId = self.taskOne.assigned_by;
+        console.log("++u++personId+++2+", personId);
+        var y = self.allUsers.findIndex(function(e) {return personId === e.id});
+        console.log("--u-----y-------2-", y);
+        self.taskOne.assigned_by_name = self.allUsers[y].username;
+        console.log("==u====name=====2=", self.taskOne.assigned_by_name );
+
+
         var x = self.taskList.findIndex(function(e) {return e.id === response.data.id});
         self.taskList[x] = response.data;
         self.detail = '';

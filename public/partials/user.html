@@ -1,10 +1,11 @@
-<div class="x-entry">
-  <h4>{{api.curentUser}} profile update</h4>
+<div class="container">
+  <h4>{{api.currentUser}} profile update</h4>
 
   <form ng-submit="api.myUpdate(api.account)">
+
     <div>
+      <input type="checkbox" id="changePassword" ng-model="api.account.wantPasswordChange">
       <label for="changePassword">change pasword?</label>
-      <input type="checkbox" ng-model="api.account.wantPasswordChange">
     </div>
 
     <div ng-show="api.account.wantPasswordChange">
@@ -25,9 +26,10 @@
       <input type="email" ng-model="api.account.email" required>
     </div>
     <div>
-      <label for="e_confirmed">Confirmed</label>
-      <input type="checkbox" ng-model="api.account.e_confirmed">
+      <input type="checkbox" id="e_confirmed" ng-model="api.account.e_confirmed">
+      <label for="e_confirmed">Confirmed?</label>
     </div>
-    <button class="x-btn x-btn-add" type="submit">update</button><span>{{api.enote}}</span>
+    <br><br>
+    <button class="waves-effect waves-light purple lighten-2 btn" type="submit">update</button><span>{{api.enote}}</span>
   </form>
 </div>

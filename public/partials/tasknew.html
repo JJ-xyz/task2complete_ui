@@ -1,4 +1,4 @@
-<div class="x-entry">
+<div class="container">
   <h4>Add New Task</h4>
 
   <form ng-submit="api.createTask(api.detail)">
@@ -9,7 +9,7 @@
     </div>
     <div>
       <label for="description">description</label>
-      <input type="textarea" ng-model="api.detail.description" required>
+      <input class="materialize-textarea" type="text" ng-model="api.detail.description" required>
     </div>
     <div>
       <label for="date_due">date due</label>
@@ -17,10 +17,10 @@
     </div>
     <div>
       <label for="assigned_to">Assigned to</label>
-      <select name="assigned_to" id="assigned_to"
+      <select class="browser-default" name="assigned_to" id="assigned_to"
         ng-options="option.username for option in api.allUsers track by option.id"
         ng-model="api.detail.theUser" required></select>
-    </div>
-    <button class="x-btn x-btn-add" type="submit">add task</button><span>{{api.enote}}</span>
+    </div><br><br>
+    <button class="waves-effect waves-light purple lighten-2 btn" type="submit">add task</button><span>{{api.enote}}</span>
   </form>
 </div>

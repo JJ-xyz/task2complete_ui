@@ -1,4 +1,4 @@
-<div class="x-entry">
+<div class="container">
   <h4>Edit Task Details</h4>
 
   <form ng-submit="api.updateTask(api.detail)">
@@ -9,23 +9,38 @@
     </div>
     <div>
       <label for="description">description</label>
-      <input type="textarea" ng-model="api.detail.description" required>
+      <input class="materialize-textarea" type="text" ng-model="api.detail.description" required>
     </div>
     <div>
     <!-- *** to be decided in sencond pass if want to update values*** -->
       <label for="date_due">date due</label>
       <input type="date" ng-model="api.detail.date_due" required>
     </div>
-    <!-- <div>
+    <div>
       <label for="assigned_to">Assigned to</label>
-      <select name="assigned_to" id="assigned_to"
+      <select class="browser-default" name="assigned_to" id="assigned_to"
         ng-options="option.username for option in api.allUsers track by option.id"
         ng-model="api.detail.theUser" required></select>
-    </div> -->
+    </div>
     <div>
       <label for="is_complete">Completed?</label>
-      <input type="checkbox" ng-model="api.detail.is_complete">
+      <input type="checkbox" id="is_complete" ng-model="api.detail.is_complete">
     </div>
-    <button class="x-btn x-btn-add" type="submit">update</button><span>{{api.enote}}</span>
+
+    <hr>
+
+    <div class="switch">
+      <label>
+        false
+        <input type="checkbox" ng-model="api.detail.is_complete">
+        <span class="lever"></span>
+        true
+      </label>
+  </div>
+
+
+    <br><br>
+
+    <button class="waves-effect purple waves-light purple lighten-2 btn" type="submit">update</button><span>{{api.enote}}</span>
   </form>
 </div>
