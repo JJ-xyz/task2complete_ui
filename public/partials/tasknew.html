@@ -20,7 +20,8 @@
       <select class="browser-default" name="assigned_to" id="assigned_to"
         ng-options="option.username for option in api.allUsers track by option.id"
         ng-model="api.detail.theUser" required></select>
-    </div><br><br>
+    </div>
+    <br><br>
     <button class="waves-effect waves-light purple lighten-2 btn" type="submit">add task</button><span>{{api.enote}}</span>
   </form>
 </div>

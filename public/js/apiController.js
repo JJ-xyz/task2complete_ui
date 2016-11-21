@@ -68,21 +68,12 @@
       })
       .then(function(userpack) {
         for (i=0; i<self.taskList.length; i++) {
-
           var personId = self.taskList[i].assigned_to;
-          console.log("++++personId+++1+", personId);
           var y = self.allUsers.findIndex(function(e) {return personId === e.id});
-          console.log("-------y-------1-", y);
           self.taskList[i].assigned_to_name = self.allUsers[y].username;
-          console.log("======name=====1=", self.taskList[i].assigned_to_name );
-
           var personId = self.taskList[i].assigned_by;
-          console.log("++++personId+++2+", personId);
           var y = self.allUsers.findIndex(function(e) {return personId === e.id});
-          console.log("-------y-------2-", y);
           self.taskList[i].assigned_by_name = self.allUsers[y].username;
-          console.log("======name=====2=", self.taskList[i].assigned_by_name );
-
         }
       })
       .catch((err) => { console.log(err) });
@@ -111,27 +102,21 @@
       })
       .then(function(response){
         self.allUsers = response.data;
-        console.log("XXXXXXXXX the user list is ", self.allUsers);
       })
       .catch((err) => { console.log(err) });
     }
 
     // --- newTask ---
     function newTask(i){
-      console.log(`getOneTask function call for next line`);      // test - 2B deleted
       getUserList();
       self.partialTitle = "Add New Task";
       self.detail = '';
-        // self.detail.theUser = '';
       $state.go('taskNew');
     }
 
     // --- createTask ---
     function createTask(detail){
-      console.log(`createTask function call from newTask`);      // test - 2B deleted
-      console.log("PASSED detail", detail);                      // test - 2B deleted
       var fdate = new Date();
-
       $http({
         method: 'POST',
         url: `${rootUrl}/api/tasks`,
@@ -150,27 +135,14 @@
       .then(function(response){
         console.log("RESPONSE-createTask", response.data);                 // test - 2B deleted
         self.taskOne = response.data;
-
         var personId = self.taskOne.assigned_to;
-        console.log("++u++personId+++1+", personId);
         var y = self.allUsers.findIndex(function(e) {return personId === e.id});
-        console.log("--u-----y-------1-", y);
         self.taskOne.assigned_to_name = self.allUsers[y].username;
-        console.log("==u====name=====1=", self.taskOne.assigned_to_name );
-
         var personId = self.taskOne.assigned_by;
-        console.log("++u++personId+++2+", personId);
         var y = self.allUsers.findIndex(function(e) {return personId === e.id});
-        console.log("--u-----y-------2-", y);
         self.taskOne.assigned_by_name = self.allUsers[y].username;
-        console.log("==u====name=====2=", self.taskOne.assigned_by_name );
-
-
-
         self.taskList.push(response.data);
         self.detail = '';
-
-
         $state.go('indexAll');
       })
       .catch((err) => { console.log(err) });
@@ -179,7 +151,6 @@
 
     // --- getOneTask ---
     function getOneTask(i){
-      console.log(`getOneTask function call for line ${i}`);
       $http({
         method: 'GET',
         url: `${rootUrl}/api/tasks/${self.taskList[i].id}`,
@@ -191,9 +162,7 @@
         response.data.date_due = new Date(response.data.date_due);
         self.taskOne = response.data;
         console.log("RESPONSE-getOneTask", response.data);
-        console.log("XXXXXXXXX DATE detail", response.data.date_due);                      // test - 2B deleted
         var fdate = new Date();
-        console.log("XXXXXXXXX DATE today", fdate);                      // test - 2B deleted
 
         self.detail = response.data;
         self.detail.theUser = {id : response.data.assigned_to, username: response.data.username}
@@ -206,8 +175,6 @@
 
     // --- updateTask ---
     function updateTask(detail){
-      console.log(`updateTask function call from getOneTask`);      // test - 2B deleted
-      console.log("PASSED detail", detail);                      // test - 2B deleted
       $http({
         method: 'PUT',
         url: `${rootUrl}/api/tasks/${self.detail.id}`,
@@ -226,19 +193,11 @@
         self.taskOne = response.data;
 
         var personId = self.taskOne.assigned_to;
-        console.log("++u++personId+++1+", personId);
         var y = self.allUsers.findIndex(function(e) {return personId === e.id});
-        console.log("--u-----y-------1-", y);
         self.taskOne.assigned_to_name = self.allUsers[y].username;
-        console.log("==u====name=====1=", self.taskOne.assigned_to_name );
-
         var personId = self.taskOne.assigned_by;
-        console.log("++u++personId+++2+", personId);
         var y = self.allUsers.findIndex(function(e) {return personId === e.id});
-        console.log("--u-----y-------2-", y);
         self.taskOne.assigned_by_name = self.allUsers[y].username;
-        console.log("==u====name=====2=", self.taskOne.assigned_by_name );
-
 
         var x = self.taskList.findIndex(function(e) {return e.id === response.data.id});
         self.taskList[x] = response.data;
@@ -251,7 +210,6 @@
 
     // --- deleteOneTask ---
     function deleteOneTask(i){
-      console.log(`deleteOneTask function call line ${i}`);
       $http({
         method: 'DELETE',
         url: `${rootUrl}/api/tasks/${self.taskList[i].id}`,
@@ -279,7 +237,6 @@
     // --- Login process, set local storage
     function login(userPass) {
       self.enote = '';
-      console.log("login userFromAngular>>>", userPass);        // test - 2B deleted
       $http({
         method: 'POST',
         url: `${rootUrl}/api/users/login`,
@@ -306,9 +263,6 @@
 
           self.enote = response.data.message;
         }
-        console.log("The user is>>>",userPass.username);              // test - 2B deleted
-        console.log("The user_id is>>>", response.data.user.id)       // test - 2B deleted
-        console.log("The token is>>>", response.data.token)           // test - 2B deleted
       })
       .catch((err) => {
         console.log(err);
@@ -349,7 +303,6 @@
 
      // --- signup process, create account
     function signup(account) {
-      console.log("accountFromAngular>>>", account);      // test - 2B deleted
       $http({
         method: 'POST',
         url: `${rootUrl}/api/users`,
@@ -361,7 +314,6 @@
         responseType: 'json'
       })
       .then(function(response) {
-        console.log("RESPONSE signup>>>",account.username);     // test - 2B deleted
         $state.go('home')
       })
       .catch((err) => {
@@ -371,7 +323,6 @@
 
      // --- update process, update user profile
     function myUpdate(account) {
-      console.log("accountFromAngular>>>", account);      // test - 2B deleted
       self.enote = '';
       if (self.account.wantPasswordChange) {
         self.enote = 'Sorry, no password change allowed';
@@ -386,7 +337,6 @@
           responseType: 'json'
           })
         .then(function(response) {
-          console.log("RESPONSE", response);     // test - 2B deleted
           $state.go('indexAll')
         })
         .catch((err) => {
